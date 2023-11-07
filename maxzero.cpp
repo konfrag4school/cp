@@ -17,6 +17,7 @@ int main() {
 
     int ans = 0;
     std::unordered_map<int, int> m;
+    m[0] = 0;
     for(int j = 1; j <= n+1; ++j) {
         if(m[a[j]] != 0) {
             ans = std::max(ans, j-m[a[j]]);
