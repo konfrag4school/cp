@@ -36,6 +36,29 @@ void add(char *s, int len) {
     cur->end = true;
 }
 
+void remove(char *s, int len) {
+    struct node *cur = &root;
+    for(int i = 0; i < len; ++i) {
+        if(cur->children[s[i] - 'a'] == NULL) {
+            return;
+        } else {
+            cur = cur->children[s[i] - 'a'];
+        }
+    }
+    cur->end = false;
+}
+
+bool check(char *s, int len) {
+    struct node *cur = &root;
+    for(int i = 0; i < len; ++i) {
+        if(cur->children[s[i] - 'a'] == NULL) {
+            return false;
+        } else {
+            cur = cur->children[s[i] - 'a'];
+        }
+    }
+    return cur->end;
+}
 
 int main() {
 
@@ -57,7 +80,7 @@ int main() {
             // printf("Added %s\n", s+slen-i-1);
         }
         ans = 0;
-        
+
 
     }
     
