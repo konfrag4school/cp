@@ -73,17 +73,16 @@ bool check(char *s, int len) {
 }
 */
 
-int countDistinctSubstrings(char *input) {
-    node *root = create();
-    int count = 1;
-    int length = strlen(input);
+int countDistinctSubstrings(char *s) {
+    int cnt = 1;
+    int length = strlen(s);
 
     for (int i = 0; i < length; i++) {
-        count += add(input + i, length - i);
+        cnt += add(s + i, length - i);
     }
 
     freeTrie(root);
-    return count;
+    return cnt;
 }
 
 int main() {
