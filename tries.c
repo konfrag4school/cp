@@ -8,7 +8,7 @@ const int MAXS = 110;
 typedef struct node {
     struct node *children[26];
     bool end;
-}node;
+} node;
 
 node *root;
 
