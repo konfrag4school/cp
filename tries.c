@@ -5,39 +5,40 @@
 
 const int MAXS = 110;
 
-struct node {
-    
+typedef struct node {
     struct node *children[26];
-
     bool end;
-};
+}node;
 
-struct node root;
+node *root;
 
-void init(struct node *n) {
+node* create() {
+    node *n = (node *) malloc(sizeof(node));
     n->end = false;
 
     for (int i = 0; i < 26; ++i) {
         n->children[i] = NULL;
     }
+    return n;
 }
 
-void add(char *s, int len) {
-    struct node *cur = &root;
+int add(char *s, int len) {
+    int isNewNode = 0;
+    node *cur = root;
     for(int i = 0; i < len; ++i) {
         if(cur->children[s[i] - 'a'] == NULL) {
-            cur->children[s[i] - 'a'] = (struct node *) malloc(sizeof(struct node));
-            cur = cur->children[s[i] - 'a'];
-            init(cur);
-        } else {
-            cur = cur->children[s[i] - 'a'];
+            cur->children[s[i] - 'a'] = create();
+            isNewNode++;
         }
+        cur = cur->children[s[i] - 'a'];
     }
     cur->end = true;
+    return isNewNode;
 }
 
-void remove(char *s, int len) {
-    struct node *cur = &root;
+/*
+void removeTrie(char *s, int len) {
+    node *cur = root;
     for(int i = 0; i < len; ++i) {
         if(cur->children[s[i] - 'a'] == NULL) {
             return;
@@ -47,9 +48,20 @@ void remove(char *s, int len) {
     }
     cur->end = false;
 }
+*/
 
+void freeTrie(node *n) {
+    for(int i = 0; i < 26; ++i) {
+        if(n->children[i]) {
+            freeTrie(n->children[i]);
+        }
+    }
+    free(n);
+}
+
+/*
 bool check(char *s, int len) {
-    struct node *cur = &root;
+    struct node *cur = root;
     for(int i = 0; i < len; ++i) {
         if(cur->children[s[i] - 'a'] == NULL) {
             return false;
@@ -59,31 +71,31 @@ bool check(char *s, int len) {
     }
     return cur->end;
 }
+*/
+
+int countDistinctSubstrings(char *input) {
+    node *root = create();
+    int count = 1;
+    int length = strlen(input);
+
+    for (int i = 0; i < length; i++) {
+        count += add(input + i, length - i);
+    }
+
+    freeTrie(root);
+    return count;
+}
 
 int main() {
-
-    int t, ans;
+    int t;
     scanf("%d", &t);
 
-    init(&root);
-
     while (t--) {
+        root = create();
         char s[MAXS];
         scanf("%s", s);
-        add(s, strlen(s));
-
-        int slen = strlen(s);
-        for(int i = 0; i < slen; ++i) {
-            add(s+i, i+1);
-            // add(s+slen-i-1, slen - i);
-            printf("Added %s\n", s+i);
-            // printf("Added %s\n", s+slen-i-1);
-        }
-        ans = 0;
-
-
+        printf("%d\n", countDistinctSubstrings(s));
     }
     
-
     return 0;
 }
