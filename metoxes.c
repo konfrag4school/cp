@@ -5,7 +5,7 @@ long long max = 0;
 
 int main() {
     int n;
-    freopen("metoxes2.in", "r", stdin);
+    // freopen("metoxes2.in", "r", stdin);
     scanf("%d", &n);
 
     for(int i = 0; i < n; ++i) {
@@ -21,7 +21,7 @@ int main() {
         }
     }
 
-    freopen("metoxes2.out", "w", stdout);
+    // freopen("metoxes2.out", "w", stdout);
     printf("%lld\n", max);
 
 }
