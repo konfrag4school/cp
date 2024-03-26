@@ -1,12 +1,14 @@
 #include <cstdio>
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 const int MAXN = 1e6+5;
 
 std::vector<std::pair<int, int>> adj[MAXN];
 bool hasStudent[MAXN];
 long long dist[MAXN];
+int ans = 1e9+7;
 
 long long sum = 0;
 
@@ -33,6 +35,13 @@ void dfs(int u, int e) {
         if(p.first == e) continue;
         dfs(p.first, u);
         num[u] += num[p.first];
+    }
+}
+
+void dfs2(int u, int e, int curdist) {
+    ans = std::min(ans, curdist);
+    for(auto p : adj[u]) {
+        // ...
     }
 }
 
@@ -68,4 +77,5 @@ int main() {
         num[i] = hasStudent[i];
 
     */
+
 }
