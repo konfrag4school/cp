@@ -9,6 +9,7 @@ std::vector<std::pair<int, int>> adj[MAXN];
 bool hasStudent[MAXN];
 long long dist[MAXN];
 int ans = 1e9+7;
+int total = 0;
 
 long long sum = 0;
 
@@ -38,10 +39,10 @@ void dfs(int u, int e) {
     }
 }
 
-void dfs2(int u, int e, int curdist) {
-    ans = std::min(ans, curdist);
+void dfs2(int u, int e, int cursum) {
+    ans = std::min(ans, cursum);
     for(auto p : adj[u]) {
-        // ...
+        dfs2(p.first, u, cursum + (2 * num[p.first] - total));
     }
 }
 
@@ -77,5 +78,7 @@ int main() {
         num[i] = hasStudent[i];
 
     */
+   total = num[1];
+   dfs(1, -1);
 
 }
